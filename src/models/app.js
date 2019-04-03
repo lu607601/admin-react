@@ -8,8 +8,8 @@ import { queryLayout, pathMatchRegexp } from 'utils'
 import { CANCEL_REQUEST_MESSAGE } from 'utils/constant'
 import api from 'api'
 import config from 'config'
-
-const { queryRouteList, logoutUser, queryUserInfo } = api
+import routes from '../utils/routes'
+const { logoutUser, queryUserInfo } = api
 
 export default {
   namespace: 'app',
@@ -58,7 +58,6 @@ export default {
     setupRequestCancel({ history }) {
       history.listen(() => {
         const { cancelRequest = new Map() } = window
-
         cancelRequest.forEach((value, key) => {
           if (value.pathname !== window.location.pathname) {
             value.cancel(CANCEL_REQUEST_MESSAGE)
@@ -74,12 +73,13 @@ export default {
   },
   effects: {
     *query({ payload }, { call, put, select }) {
-      const { success, user } = yield call(queryUserInfo, payload)
+      const { success, data } = yield call(queryUserInfo, payload)
       const { locationPathname } = yield select(_ => _.app)
-
+      const user = data
       if (success && user) {
-        const { list } = yield call(queryRouteList)
+        const list = routes
         const { permissions } = user
+
         let routeList = list
         if (
           permissions.role === ROLE_TYPE.ADMIN ||
@@ -106,7 +106,7 @@ export default {
             routeList,
           },
         })
-        if (pathMatchRegexp(['/','/login'], window.location.pathname)) {
+        if (pathMatchRegexp(['/', '/login'], window.location.pathname)) {
           router.push({
             pathname: '/dashboard',
           })

@@ -44,7 +44,8 @@ export default function request(options) {
       cancel,
     })
   })
-
+  options.baseURL = 'http://localhost:3000'
+  options.withCredentials = true
   return axios(options)
     .then(response => {
       const { statusText, status, data } = response
@@ -67,7 +68,7 @@ export default function request(options) {
       })
     })
     .catch(error => {
-      const { response, message } = error
+      const { response } = error
 
       if (String(message) === CANCEL_REQUEST_MESSAGE) {
         return {
@@ -77,14 +78,15 @@ export default function request(options) {
 
       let msg
       let statusCode
-
+      console.log('response:', response)
       if (response && response instanceof Object) {
         const { data, statusText } = response
         statusCode = response.status
-        msg = data.message || statusText
+        msg = data.msg || statusText
       } else {
         statusCode = 600
-        msg = error.message || 'Network Error'
+        console.log('err:', error)
+        msg = error.msg || 'Network Error'
       }
 
       /* eslint-disable */

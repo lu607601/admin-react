@@ -8,21 +8,15 @@ import { Page } from 'components'
 import { stringify } from 'qs'
 import List from './components/List'
 import Filter from './components/Filter'
-import Modal from './components/Modal'
+
 @withI18n()
-@connect(({ user, loading }) => ({ user, loading }))
-class User extends PureComponent {
+@connect(({ article, loading }) => ({ article, loading }))
+class Articles extends PureComponent {
   render() {
-    const { location, dispatch, user, loading, i18n } = this.props
+    const { location, dispatch, article, loading } = this.props
     const { query, pathname } = location
-    const {
-      list,
-      pagination,
-      currentItem,
-      modalVisible,
-      modalType,
-      selectedRowKeys,
-    } = user
+    const { list, pagination, selectedRowKeys } = article
+
     const handleRefresh = newQuery => {
       router.push({
         pathname,
@@ -35,34 +29,9 @@ class User extends PureComponent {
         ),
       })
     }
-
-    const modalProps = {
-      item: modalType === 'create' ? {} : currentItem,
-      visible: modalVisible,
-      maskClosable: false,
-      confirmLoading: loading.effects[`user/${modalType}`],
-      title: `${
-        modalType === 'create' ? i18n.t`Create User` : i18n.t`Update User`
-      }`,
-      centered: true,
-      onOk(data) {
-        dispatch({
-          type: `user/${modalType}`,
-          payload: data,
-        }).then(() => {
-          handleRefresh()
-        })
-      },
-      onCancel() {
-        dispatch({
-          type: 'user/hideModal',
-        })
-      },
-    }
-
     const listProps = {
       dataSource: list,
-      loading: loading.effects['user/query'],
+      loading: loading.effects['article/query'],
       pagination,
       onChange(page) {
         handleRefresh({
@@ -70,10 +39,10 @@ class User extends PureComponent {
           pageSize: page.pageSize,
         })
       },
-      onDeleteItem(id) {
+      onDeleteItem(_id) {
         dispatch({
-          type: 'user/delete',
-          payload: id,
+          type: 'article/delete',
+          payload: _id,
         }).then(() => {
           handleRefresh({
             page:
@@ -84,19 +53,13 @@ class User extends PureComponent {
         })
       },
       onEditItem(item) {
-        dispatch({
-          type: 'user/showModal',
-          payload: {
-            modalType: 'update',
-            currentItem: item,
-          },
-        })
+        router.push(`/article/detail/${item._id}`)
       },
       rowSelection: {
         selectedRowKeys,
         onChange: keys => {
           dispatch({
-            type: 'user/updateState',
+            type: 'article/updateState',
             payload: {
               selectedRowKeys: keys,
             },
@@ -115,11 +78,16 @@ class User extends PureComponent {
           page: 1,
         })
       },
+      onAdd() {
+        router.push({
+          pathname: '/article/createArticle',
+        })
+      },
     }
 
     const handleDeleteItems = () => {
       dispatch({
-        type: 'user/multiDelete',
+        type: 'article/multiDelete',
         payload: {
           _ids: selectedRowKeys,
         },
@@ -153,17 +121,16 @@ class User extends PureComponent {
           </Row>
         )}
         <List {...listProps} />
-        {modalVisible && <Modal {...modalProps} />}
       </Page>
     )
   }
 }
 
-User.propTypes = {
-  user: PropTypes.object,
+Articles.propTypes = {
+  article: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default User
+export default Articles

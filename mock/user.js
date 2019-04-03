@@ -31,7 +31,7 @@ const EnumRoleType = {
 
 const userPermission = {
   DEFAULT: {
-    visit: ['1', '2', '21', '7', '5', '51', '52', '53'],
+    visit: ['1', '2', '21', '7', '6', '5', '51', '52', '53'],
     role: EnumRoleType.DEFAULT,
   },
   ADMIN: {
@@ -102,7 +102,7 @@ module.exports = {
         'token',
         JSON.stringify({ id: user[0].id, deadline: now.getTime() }),
         {
-          maxAge: 900000,
+          maxAge: 900000 * 30,
           httpOnly: true,
         }
       )
@@ -182,7 +182,7 @@ module.exports = {
   },
 
   [`POST ${ApiPrefix}/users/delete`](req, res) {
-    const { ids=[] } = req.body
+    const { ids = [] } = req.body
     database = database.filter(item => !ids.some(_ => _ === item.id))
     res.status(204).end()
   },

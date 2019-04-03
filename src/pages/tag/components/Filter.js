@@ -73,9 +73,9 @@ class Filter extends PureComponent {
   }
 
   render() {
-    const { filter, form, i18n } = this.props
+    const { onAdd, filter, form, i18n } = this.props
     const { getFieldDecorator } = form
-    const { name } = filter
+    const { title } = filter
 
     let initialCreateTime = []
     if (filter.createTime && filter.createTime[0]) {
@@ -88,9 +88,9 @@ class Filter extends PureComponent {
     return (
       <Row gutter={24}>
         <Col {...ColProps} xl={{ span: 8 }} md={{ span: 8 }}>
-          {getFieldDecorator('name', { initialValue: name })(
+          {getFieldDecorator('title', { initialValue: title })(
             <Search
-              placeholder={i18n.t`Search Name`}
+              placeholder={i18n.t`Search Title`}
               onSearch={this.handleSubmit}
             />
           )}
@@ -125,8 +125,11 @@ class Filter extends PureComponent {
               >
                 <Trans>Search</Trans>
               </Button>
-              <Button onClick={this.handleReset}>
+              <Button className="margin-right" onClick={this.handleReset}>
                 <Trans>Reset</Trans>
+              </Button>
+              <Button onClick={onAdd}>
+                <Trans>Create</Trans>
               </Button>
             </div>
           </Row>
@@ -137,6 +140,7 @@ class Filter extends PureComponent {
 }
 
 Filter.propTypes = {
+  onAdd: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,

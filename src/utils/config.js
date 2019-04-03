@@ -1,8 +1,8 @@
 module.exports = {
-  siteName: 'AntD Admin',
+  siteName: 'Admin-Blog',
   copyright: 'Ant Design Admin  © 2018 zuiidea',
   logoPath: '/logo.svg',
-  apiPrefix: '/api/v1',
+  apiPrefix: '/api',
   fixedHeader: true, // sticky primary layout header
 
   /* Layout configuration, specify which layout to use for route. */
@@ -34,6 +34,6 @@ module.exports = {
         flag: '/china.svg',
       },
     ],
-    defaultLanguage: 'en',
+    defaultLanguage: 'zh',
   },
 }

@@ -7,10 +7,10 @@ const database = [
     icon: 'dashboard',
     name: 'Dashboard',
     zh: {
-      name: '仪表盘'
+      name: '仪表盘',
     },
     'pt-br': {
-      name: 'Dashboard'
+      name: 'Dashboard',
     },
     route: '/dashboard',
   },
@@ -19,26 +19,13 @@ const database = [
     breadcrumbParentId: '1',
     name: 'Users',
     zh: {
-      name: '用户管理'
+      name: '用户管理',
     },
     'pt-br': {
-      name: 'Usuário'
+      name: 'Usuário',
     },
     icon: 'user',
     route: '/user',
-  },
-  {
-    id: '7',
-    breadcrumbParentId: '1',
-    name: 'Posts',
-    zh: {
-      name: '用户管理'
-    },
-    'pt-br': {
-      name: 'Posts'
-    },
-    icon: 'shopping-cart',
-    route: '/post',
   },
   {
     id: '21',
@@ -46,35 +33,22 @@ const database = [
     breadcrumbParentId: '2',
     name: 'User Detail',
     zh: {
-      name: '用户详情'
+      name: '用户详情',
     },
     'pt-br': {
-      name: 'Detalhes do usuário'
+      name: 'Detalhes do usuário',
     },
     route: '/user/:id',
-  },
-  {
-    id: '3',
-    breadcrumbParentId: '1',
-    name: 'Request',
-    zh: {
-      name: 'Request'
-    },
-    'pt-br': {
-      name: 'Requisição'
-    },
-    icon: 'api',
-    route: '/request',
   },
   {
     id: '4',
     breadcrumbParentId: '1',
     name: 'UI Element',
     zh: {
-      name: 'UI组件'
+      name: 'UI组件',
     },
     'pt-br': {
-      name: 'Elementos UI'
+      name: 'Elementos UI',
     },
     icon: 'camera-o',
   },
@@ -84,67 +58,65 @@ const database = [
     menuParentId: '4',
     name: 'Editor',
     zh: {
-      name: 'Editor'
+      name: 'Editor',
     },
     'pt-br': {
-      name: 'Editor'
+      name: 'Editor',
     },
     icon: 'edit',
     route: '/UIElement/editor',
   },
   {
     id: '5',
+    icon: 'file-text',
     breadcrumbParentId: '1',
-    name: 'Charts',
+    name: 'articles',
     zh: {
-      name: 'Charts'
+      name: '文章',
     },
     'pt-br': {
-      name: 'Graficos'
+      name: '文章',
     },
-    icon: 'code-o',
+    route: '/articles',
   },
   {
     id: '51',
     breadcrumbParentId: '5',
     menuParentId: '5',
-    name: 'ECharts',
+    name: 'lists',
     zh: {
-      name: 'ECharts'
+      name: '文章列表',
     },
     'pt-br': {
-      name: 'ECharts'
+      name: '文章列表',
     },
-    icon: 'line-chart',
-    route: '/chart/ECharts',
+    route: '/articles/lists',
   },
   {
     id: '52',
     breadcrumbParentId: '5',
     menuParentId: '5',
-    name: 'HighCharts',
+    name: 'createArticle',
     zh: {
-      name: 'HighCharts'
+      name: '文章创作',
     },
     'pt-br': {
-      name: 'HighCharts'
+      name: '文章创作',
     },
-    icon: 'bar-chart',
-    route: '/chart/highCharts',
+    route: '/articles/createArticle',
   },
   {
-    id: '53',
-    breadcrumbParentId: '5',
-    menuParentId: '5',
-    name: 'Rechartst',
+    id: '6',
+    icon: 'setting',
+    breadcrumbParentId: '1',
+    name: 'Type',
     zh: {
-      name: 'Rechartst'
+      name: '类别管理',
     },
     'pt-br': {
-      name: 'Rechartst'
+      name: '类别管理',
     },
-    icon: 'area-chart',
-    route: '/chart/Recharts',
+    route: '/type',
   },
 ]
 

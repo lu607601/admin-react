@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import { Table, Modal, Avatar } from 'antd'
+import { Table, Modal } from 'antd'
+import { withI18n } from '@lingui/react'
 import { DropOption } from 'components'
-import { Trans, withI18n } from '@lingui/react'
 import styles from './List.less'
 
 const { confirm } = Modal
@@ -11,51 +10,35 @@ const { confirm } = Modal
 class List extends PureComponent {
   handleMenuClick = (record, e) => {
     const { onDeleteItem, onEditItem, i18n } = this.props
-
     if (e.key === '1') {
       onEditItem(record)
     } else if (e.key === '2') {
       confirm({
-        title: i18n.t`Are you sure delete this record?`,
+        title: i18n.t`确定删除此标签吗?`,
         onOk() {
           onDeleteItem(record._id)
         },
       })
     }
   }
-
   render() {
-    const { onDeleteItem, onEditItem, i18n, ...tableProps } = this.props
-
+    const { i18n, ...tableProps } = this.props
     const columns = [
       {
-        title: <Trans>Avatar</Trans>,
-        dataIndex: 'userAvatar',
-        key: 'avatar',
-        width: 100,
-        fixed: 'left',
-        render: text => <Avatar style={{ marginLeft: 8 }} src={text} />,
+        title: i18n.t`Title`,
+        dataIndex: 'title',
       },
       {
-        title: <Trans>Name</Trans>,
-        dataIndex: 'userName',
-        key: 'name',
+        title: i18n.t`Desc`,
+        dataIndex: 'desc',
       },
       {
-        title: <Trans>Email</Trans>,
-        dataIndex: 'userEmail',
-        key: 'email',
-      },
-      {
-        title: <Trans>CreateTime</Trans>,
+        title: i18n.t`CreateTime`,
         dataIndex: 'createTime',
-        key: 'createTime',
       },
       {
-        title: <Trans>Operation</Trans>,
+        title: i18n.t`Operation`,
         key: 'operation',
-        fixed: 'right',
-        width: 120,
         render: (text, record) => {
           return (
             <DropOption
@@ -77,20 +60,14 @@ class List extends PureComponent {
           ...tableProps.pagination,
           showTotal: total => i18n.t`Total ${total} Items`,
         }}
-        className={styles.table}
         bordered
+        className={styles.table}
         columns={columns}
         simple
-        rowKey={record => record._id}
+        rowKey={record => record.id}
       />
     )
   }
-}
-
-List.propTypes = {
-  onDeleteItem: PropTypes.func,
-  onEditItem: PropTypes.func,
-  location: PropTypes.object,
 }
 
 export default List
